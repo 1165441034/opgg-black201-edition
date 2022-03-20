@@ -12,6 +12,8 @@ import {useTranslation} from "react-i18next";
 // const { ipcRenderer, remote, shell } = globalThis.require("electron");
 // const appVersion = remote.app.getVersion();
 const {isNMP} = require("../../../utils/nmp");
+// Edit By BlacK201
+const {editionVersion} = require("../../../utils/edition_version");
 
 const Side = () => {
   const {t} = useTranslation();
@@ -331,7 +333,8 @@ const Side = () => {
           {/*  <Link to="/support">Support</Link>*/}
           {/*</li>*/}
         </ul>
-        <span className="side-version">V.{version}</span>
+        {/* Edit By BlacK201 */}
+        <span className="side-version"><p>V.{version}</p> <p>{editionVersion}</p></span>
       </div>
     </div>
   );
