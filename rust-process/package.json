@@ -1,0 +1,17 @@
+{
+  "name": "rust-process",
+  "version": "0.1.0",
+  "description": "",
+  "main": "lib/index.js",
+  "author": "andy <andy@op.gg>",
+  "license": "MIT",
+  "dependencies": {
+    "neon-cli": "^0.7.1"
+  },
+  "scripts": {
+    "install": "neon build"
+  },
+  "os": [
+    "win32"
+  ]
+}

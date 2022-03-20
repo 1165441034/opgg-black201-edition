@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../assets/js/updater.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/loading.css">
+</head>
+<body>
+<div class="main">
+<!--    <img alt="opgg" width="130px" src="assets/images/opgg-logo.svg" />-->
+    <img class="img" width="350px" src="../assets/images/loading.png"  />
+<!--    <img class="img-tmp" width="350px" src="assets/images/april.jpg" style="margin-top: 60px; display: none" />-->
+</div>
+<script>
+    if (Date.now() <= Date.parse("04/01/2021 23:59:59")) {
+        $(".img-tmp").css("display", "block");
+    } else {
+        $(".img").css("display", "block");
+    }
+</script>
+</body>
+</html>
