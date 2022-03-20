@@ -1,0 +1,23 @@
+[package]
+name = "rust-process"
+version = "0.1.0"
+authors = ["andy <andy@op.gg>"]
+license = "MIT"
+build = "build.rs"
+edition = "2018"
+exclude = ["artifacts.json", "index.node"]
+
+[lib]
+name = "rust_process"
+crate-type = ["cdylib"]
+
+[build-dependencies]
+neon-build = "0.7.1"
+
+[dependencies]
+neon = "0.7.1"
+winapi = { version = "0.3", features = ["debug", "winuser", "tlhelp32", "handleapi", "processthreadsapi", "minwindef", "ntdef", "errhandlingapi", "memoryapi"] }
+ntapi = "0.3.6"
+
+[profile.release]
+lto = true
