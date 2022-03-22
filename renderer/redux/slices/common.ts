@@ -42,6 +42,7 @@ const initialState: commonState = {
     lolCurrentGameQueue: -9999,
     isAutoRune: getSettingInLocalStorage("autorune"),
     isAutoSpell: getSettingInLocalStorage("isSpell"),
+    isAutoAccept: getSettingInLocalStorage("autoaccept"),
     region: localStorage.getItem("region") ?? "KR",
     hasError: false
 }
@@ -65,7 +66,7 @@ const issuesDisplaySlice = createSlice({
             state.champion = action.payload
         },
         setChampionOverview(state, action) {
-          state.championOverview = action.payload
+            state.championOverview = action.payload
         },
         setIngame(state, action: PayloadAction<ingameDataType>) {
             state.ingame = action.payload
@@ -172,6 +173,9 @@ const issuesDisplaySlice = createSlice({
         setIsAutoSpell(state, action) {
             state.isAutoSpell = action.payload
         },
+        setIsAutoAccept(state, action) {
+            state.isAutoAccept = action.payload
+        },
         setRegion(state, action) {
             state.region = action.payload
         },
@@ -218,6 +222,7 @@ export const {
     setLoLCurrentGameQueue,
     setIsAutoRune,
     setIsAutoSpell,
+    setIsAutoAccept,
     setRegion,
     setHasError
 } = issuesDisplaySlice.actions

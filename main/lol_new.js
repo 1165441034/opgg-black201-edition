@@ -69,6 +69,7 @@ class LoL {
             isRuneOn: true,
             isItemBuildOn: true,
             isSpellOn: true,
+            isAutoAcceptOn: false,
             spellLocation: "d",
             isOverlayOn: false,
             region: null
@@ -101,6 +102,10 @@ class LoL {
             this.app.window.getLocalStorage("autoitem")
                 .then((result) => {
                     this.config.isItemBuildOn = !(result === "false" || result === false);
+                })
+            this.app.window.getLocalStorage("autoaccept")
+                .then((result) => {
+                    this.config.isAutoAcceptOn = !(result === "false" || result === false);
                 })
             this.app.window.getLocalStorage("isSpell")
                 .then((result) => {
@@ -218,6 +223,15 @@ class LoL {
                             this.champSelectionSession(data);
                             break;
 
+                        case "/lol-matchmaking/v1/ready-check":
+                            console.log(data)
+                            if (data.state === "InProgress") {
+                                if (this.config.isAutoAcceptOn){
+                                    this.acceptMatch();
+                                }
+                            }
+                            break;
+
                         case lolConstants.LOL_PRESHUTDOWN_BEGIN:
                             this.ws.close();
                             break;
@@ -256,6 +270,10 @@ class LoL {
             this.game.queueId = gameFlow.data.gameData.queue.id;
             this.gameFlowChanged(gameFlow.data);
         }
+    }
+
+    async acceptMatch() {
+        await this.callAPI("POST", "lol", "/lol-lobby-team-builder/v1/ready-check/accept").catch((_) => {console.log(_)});
     }
 
     checkProcess() {
@@ -1113,6 +1131,10 @@ class LoL {
 
         ipcMain.on("autoitem", (event, arg) => {
             this.config.isItemBuildOn = arg;
+        });
+
+        ipcMain.on("autoaccept", (event, arg) => {
+            this.config.isAutoAcceptOn = arg;
         });
 
         ipcMain.on("spell", (event, arg) => {
