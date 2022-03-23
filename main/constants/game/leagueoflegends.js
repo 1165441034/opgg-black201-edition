@@ -2,6 +2,10 @@ module.exports = Object.freeze({
     LOL_CHAMPION_INFO: "/lol-champions/v1/inventories/{0}/champions/{1}",
     LOL_CHAMPSELECT_MY_SELECTION: "/lol-champ-select/v1/session/my-selection",
     LOL_CHAMPSELECT_SESSION: "/lol-champ-select/v1/session",
+    // Edited By BlacK201
+    LOL_CHAMPSELECT_LEGACY_SESSION: "/lol-champ-select-legacy/v1/session",
+    LOL_TEAM_BUILDER_SESSION: "/lol-lobby-team-builder/champ-select/v1/session",
+
     LOL_CHAT_CONFIG: "/lol-chat/v1/config",
     LOL_CURRENT_SUMMONER: "/lol-summoner/v1/current-summoner",
     LOL_EOG_STATS_BLOCK: "/lol-end-of-game/v1/eog-stats-block",

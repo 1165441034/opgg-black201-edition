@@ -257,18 +257,26 @@ class LoL {
         }
     }
 
+    // Edited By BlacK201
     async initDesktopApp() {
-        // 멀티서치, 챔피언분석
-        let championSelect = await this.callAPI("GET", "lol", lolConstants.LOL_CHAMPSELECT_SESSION).catch((_) => {return null;});
-        if (championSelect) {
-            this.champSelectionSession(championSelect.data);
-        }
-
         // 인게임정보
         let gameFlow = await this.callAPI("GET", "lol", lolConstants.LOL_GAMEFLOW_SESSION).catch((_) => {return null;});
         if (gameFlow) {
             this.game.queueId = gameFlow.data.gameData.queue.id;
             this.gameFlowChanged(gameFlow.data);
+        }
+
+        // 멀티서치, 챔피언분석
+        // 为实现强制刷新 判断游戏类型 使用不同的地址取得数据
+        let championSelect = null;
+        if (this.game.queueId === -1){
+            championSelect = await this.callAPI("GET", "lol", lolConstants.LOL_CHAMPSELECT_LEGACY_SESSION).catch((_) => {return null;});
+        } else {
+            championSelect = await this.callAPI("GET", "lol", lolConstants.LOL_TEAM_BUILDER_SESSION).catch((_) => {return null;});
+        }
+        console.log(championSelect.data)
+        if (championSelect) {
+            this.champSelectionSession(championSelect.data);
         }
     }
 
@@ -1105,6 +1113,12 @@ class LoL {
 
         ipcMain.handle("current-summoner", () => {
             return this.game.summoner;
+        });
+
+        ipcMain.on("force-refresh-champion", () => {
+            this.game.championId = 0;
+            this.game.queueId = 0;
+            this.initDesktopApp();
         });
 
         ipcMain.on("update-perk-page", (event, arg) => {
