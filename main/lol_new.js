@@ -561,14 +561,24 @@ class LoL {
         let localPlayerCellId = data.localPlayerCellId;
         let me = _.find(data.myTeam, {cellId: localPlayerCellId});
         let hasChange = false;
-
-        if (me) {
-            if (me.championId !== 0 && me.championId !== this.game.championId) {
-                hasChange = true;
-                this.game.championId = me.championId;
-            } else if (me.championPickIntent !== 0 && me.championPickIntent !== this.game.championId) {
-                hasChange = true;
-                this.game.championId = me.championPickIntent;
+        if (this.game.queueId === 430) {
+            let actions = data.actions[0];
+            let myAction = _.find(actions, {actorCellId: localPlayerCellId});
+            if (myAction) {
+                if (myAction.championId !== 0 && this.game.championId !== myAction.championId) {
+                    hasChange = true;
+                    this.game.championId = myAction.championId;
+                }
+            }
+        } else {
+            if (me) {
+                if (me.championId !== 0 && me.championId !== this.game.championId) {
+                    hasChange = true;
+                    this.game.championId = me.championId;
+                } else if (me.championPickIntent !== 0 && me.championPickIntent !== this.game.championId) {
+                    hasChange = true;
+                    this.game.championId = me.championPickIntent;
+                }
             }
         }
 
