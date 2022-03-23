@@ -392,6 +392,12 @@ const Champions = ({champion}: any) => {
         12: "SummonerTeleport"
     }
 
+    // Edit By BlacK201
+    const onClickForceRefresh = () => () => {
+        window.api.send("force-refresh-champion", {
+        });
+    }
+
     const onClickChampionName = (championName = "", lane="") => () => {
         window.api.send("openChampionPage", {
             key: championName,
@@ -713,6 +719,16 @@ const Champions = ({champion}: any) => {
                         value={selectedVersionFilter}
                         onChange={handleSelectedVersionFilter}
                         highlight={highlightFilters} />
+                    {/* Edit By BlacK201 */}
+                    <div className="side-item-setting-spell" style={{
+                        width: "64px",
+                        marginLeft: "10px",
+                        color: "white",
+                        height: "36px"
+                    }}
+                         onClick={onClickForceRefresh()}>
+                        强制刷新
+                    </div>
                     {combo && !isOverlay &&
                     <NavLink
                         to={{

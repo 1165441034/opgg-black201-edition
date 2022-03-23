@@ -255,14 +255,14 @@ class LoL {
                 this.ws = null;
                 this.broadcastIPC("logged-in", null, true);
                 if (isNMP) {
-                    this.app.window.setTitle("OP.GGforDesktop");
+                    this.app.window.setTitle("OP.GG for Desktop");
                 }
-                this.isGameRunning = false;
                 this.detectGameProcess();
             });
         }
     }
 
+    // Edited By BlacK201
     async initDesktopApp() {
         // 인게임정보
         let gameFlow = await this.callAPI("GET", "lol", lolConstants.LOL_GAMEFLOW_SESSION).catch((_) => {return null;});
@@ -272,7 +272,13 @@ class LoL {
         }
 
         // 멀티서치, 챔피언분석
-        let championSelect = await this.callAPI("GET", "lol", lolConstants.LOL_CHAMPSELECT_SESSION).catch((_) => {return null;});
+        // 为实现强制刷新 判断游戏类型 使用不同的地址取得数据
+        let championSelect = null;
+        if (this.game.queueId === -1){
+            championSelect = await this.callAPI("GET", "lol", lolConstants.LOL_CHAMPSELECT_LEGACY_SESSION).catch((_) => {return null;});
+        } else {
+            championSelect = await this.callAPI("GET", "lol", lolConstants.LOL_TEAM_BUILDER_SESSION).catch((_) => {return null;});
+        }
         if (championSelect) {
             this.champSelectionSession(championSelect.data);
         }
@@ -1116,6 +1122,12 @@ class LoL {
             if (isNMP) {
                 this.app.window.setTitle("OP.GGforDesktop");
             }
+        });
+
+        ipcMain.on("force-refresh-champion", () => {
+            this.game.championId = 0;
+            this.game.queueId = 0;
+            this.initDesktopApp();
         });
 
         ipcMain.on("update-perk-page", (event, arg) => {
