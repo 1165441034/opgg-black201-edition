@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/loading.css">
+</head>
+<body>
+<div class="main">
+    <img class="img" width="350px" src="../assets/images/loading.png" style="display: none;"  />
+    <img class="img-tmp" width="350px" src="../assets/images/april/157.gif" style="margin-top: 60px; display: none" />
+</div>
+<script>
+    function aprilFoolsDay(year) {
+        let today = new Date();
+        let start = new Date(year, 3, 1, 0, 0, 0, 0);
+        let end = new Date(year, 3, 2, 0, 0, 0, 0);
+
+        return (start <= today) && (today < end);
+    }
+
+   if (aprilFoolsDay(2022)) {
+       document.querySelector(".img-tmp").style.display = "block";
+   } else {
+       document.querySelector(".img").style.display = "block";
+   }
+</script>
+</body>
+</html>
